@@ -1,16 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const countryController = require('../controllers/countryController');
 
-// Placeholder routes - we'll implement these in later steps
-router.get('/', (req, res) => {
-  res.json({ message: 'Countries endpoint - Coming soon!' });
-});
+// POST /countries/refresh
+router.post('/refresh', countryController.refreshCountries);
 
-router.get('/status', (req, res) => {
-  res.json({ 
-    total_countries: 0, 
-    last_refreshed_at: null 
-  });
-});
+// GET /countries/image
+router.get('/image', countryController.getImage);
+
+// GET /countries/status
+router.get('/status', countryController.getStatus);
+
+// GET /countries (must be before /:name)
+router.get('/', countryController.getAllCountries);
+
+// GET /countries/:name
+router.get('/:name', countryController.getCountryByName);
+
+// DELETE /countries/:name
+router.delete('/:name', countryController.deleteCountryByName);
 
 module.exports = router;
